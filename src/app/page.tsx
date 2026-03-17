@@ -1,415 +1,340 @@
-// src/app/page.tsx
 import Link from "next/link";
 
-type Stat = {
-  label: string;
-  value: string;
-  sub?: string;
-};
+const stats = [
+  { label: "Commands Learned", value: "24", subtext: "+4 this week" },
+  { label: "Quiz Accuracy", value: "87%", subtext: "Last 7 days" },
+  { label: "Current Streak", value: "12 days", subtext: "Best streak: 18" },
+  { label: "Daily XP", value: "240", subtext: "Level 24" },
+];
 
-type FeatureCard = {
-  title: string;
-  description: string;
-  href: string;
-  cta: string;
-  icon: React.ReactNode;
-};
+const modules = [
+  {
+    title: "Command Library",
+    description: "Browse Linux and Python commands with examples and usage notes.",
+    href: "#",
+    button: "Browse Commands",
+  },
+  {
+    title: "Quick Review",
+    description: "Use flashcards to lock in syntax, definitions, and common flags.",
+    href: "#",
+    button: "Start Review",
+  },
+  {
+    title: "Skill Check",
+    description: "Take quizzes to test your command-line knowledge and accuracy.",
+    href: "#",
+    button: "Take Quiz",
+  },
+  {
+    title: "Today's Challenge",
+    description: "Complete one focused task today to keep your streak alive.",
+    href: "#",
+    button: "Begin Challenge",
+  },
+];
 
-export default function DashboardPage() {
-  const userName = "Gabriel"; // later: replace with auth user name
-  const todayGoal = "Complete 1 quiz + review 10 commands";
+const progress = [
+  { name: "Linux Shell", value: 78 },
+  { name: "Python Basics", value: 92 },
+  { name: "Python Advanced", value: 45 },
+  { name: "Scripting", value: 61 },
+  { name: "Networking", value: 30 },
+];
 
-  const stats: Stat[] = [
-    { label: "Commands Learned", value: "24", sub: "+3 this week" },
-    { label: "Quiz Accuracy", value: "87%", sub: "Last 7 days" },
-    { label: "Current Streak", value: "6 days", sub: "Keep it going" },
-    { label: "Daily XP", value: "240", sub: "Level 24 → 25" },
-  ];
-
-  const features: FeatureCard[] = [
-    {
-      title: "Command Library",
-      description: "Search Linux & Python commands with examples and notes.",
-      href: "/repository",
-      cta: "Browse commands",
-      icon: <IconBook />,
-    },
-    {
-      title: "Quick Review",
-      description: "Flashcards to lock in syntax and purpose fast.",
-      href: "/flashcards",
-      cta: "Start review",
-      icon: <IconCards />,
-    },
-    {
-      title: "Skill Check",
-      description: "Short quizzes to test what you actually remember.",
-      href: "/quizzes",
-      cta: "Take a quiz",
-      icon: <IconQuiz />,
-    },
-    {
-      title: "Today’s Challenge",
-      description: "One practical task a day to build real consistency.",
-      href: "/daily-challenge",
-      cta: "Begin challenge",
-      icon: <IconBolt />,
-    },
-  ];
-
+export default function Home() {
   return (
-    <main className="min-h-screen bg-zinc-950 text-zinc-100">
-      {/* Top bar */}
-      <header className="sticky top-0 z-10 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
-        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
-          <div className="flex items-center gap-3">
-            <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 ring-1 ring-white/10">
-              <IconTerminal />
-            </div>
-            <div>
-              <p className="text-sm text-zinc-400">Tech Command Trainer</p>
-              <h1 className="text-lg font-semibold leading-tight">
-                Dashboard
-              </h1>
-            </div>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <a
-              className="hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 hover:bg-white/10 md:inline-flex"
-              href="#"
-              target="_blank"
-              rel="noreferrer"
-              title="Add your deployed URL here"
-            >
-              Live Demo
-            </a>
-            <a
-              className="hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 hover:bg-white/10 md:inline-flex"
-              href="https://github.com/gcastanon28/tech-command-trainer"
-              target="_blank"
-              rel="noreferrer"
-            >
-              GitHub
-            </a>
-
-            <button className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-200">
-              <span className="grid h-6 w-6 place-items-center rounded-full bg-zinc-900 text-white">
-                {userName.slice(0, 1)}
-              </span>
-              <span className="hidden sm:inline">Profile</span>
-            </button>
-          </div>
-        </div>
-      </header>
-
-      {/* Content */}
-      <div className="mx-auto max-w-6xl px-4 py-8">
-        {/* Hero */}
-        <section className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 ring-1 ring-white/5">
-          <p className="text-sm text-zinc-300">Welcome back,</p>
-          <div className="mt-1 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
-            <div>
-              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
-                {userName} 👋
-              </h2>
-              <p className="mt-2 max-w-2xl text-sm text-zinc-300">
-                Practice Linux + Python commands daily, test your memory, and build consistency like a real engineer.
-              </p>
-            </div>
-
-            <div className="flex flex-col gap-2 sm:flex-row">
-              <Link
-                href="/daily-challenge"
-                className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-zinc-200"
-              >
-                Start today’s challenge
-              </Link>
-              <Link
-                href="/quizzes"
-                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Take a quick quiz
-              </Link>
-            </div>
-          </div>
-
-          {/* Goal */}
-          <div className="mt-5 flex flex-col gap-2 rounded-xl border border-white/10 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
+    <main className="min-h-screen bg-[#0a0f1c] text-white">
+      <div className="flex min-h-screen">
+        {/* Sidebar */}
+        <aside className="hidden w-72 border-r border-white/10 bg-[#08111f] lg:flex lg:flex-col">
+          <div className="border-b border-white/10 px-6 py-6">
             <div className="flex items-center gap-3">
-              <div className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 ring-1 ring-white/10">
-                <IconTarget />
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-blue-500/20 text-xl">
+                &gt;_
               </div>
               <div>
-                <p className="text-xs uppercase tracking-wide text-zinc-400">
-                  Today’s goal
-                </p>
-                <p className="text-sm font-medium text-zinc-100">
-                  {todayGoal}
-                </p>
+                <p className="text-xl font-bold">Tech Command Trainer</p>
+                <p className="text-sm text-white/60">Linux + Python Mastery</p>
               </div>
             </div>
+          </div>
 
-            <div className="flex items-center gap-2">
-              <button className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-200 hover:bg-white/10">
-                Edit goal
-              </button>
-              <button className="rounded-lg bg-emerald-400 px-3 py-2 text-xs font-semibold text-zinc-950 hover:bg-emerald-300">
-                Mark done
+          <nav className="flex-1 px-4 py-6">
+            <div className="space-y-2">
+              <SidebarItem label="Dashboard" active />
+              <SidebarItem label="Command Library" />
+              <SidebarItem label="Quick Review" />
+              <SidebarItem label="Skill Check" />
+              <SidebarItem label="Today's Challenge" />
+              <SidebarItem label="Progress" />
+              <SidebarItem label="Settings" />
+            </div>
+          </nav>
+
+          <div className="border-t border-white/10 p-4">
+            <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
+              <p className="text-sm font-semibold">Daily Goal</p>
+              <p className="mt-1 text-sm text-white/70">
+                Complete 1 quiz and review 10 commands.
+              </p>
+              <button className="mt-4 w-full rounded-xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-400">
+                Continue Learning
               </button>
             </div>
           </div>
-        </section>
+        </aside>
 
-        {/* Stats */}
-        <section className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
-          {stats.map((s) => (
-            <div
-              key={s.label}
-              className="rounded-2xl border border-white/10 bg-white/5 p-4 ring-1 ring-white/5"
-            >
-              <p className="text-xs uppercase tracking-wide text-zinc-400">
-                {s.label}
-              </p>
-              <p className="mt-2 text-2xl font-semibold">{s.value}</p>
-              {s.sub ? (
-                <p className="mt-1 text-xs text-zinc-400">{s.sub}</p>
-              ) : null}
-            </div>
-          ))}
-        </section>
-
-        {/* Main grid */}
-        <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
-          {/* Features */}
-          <div className="lg:col-span-2">
-            <div className="mb-3 flex items-end justify-between">
+        {/* Main content */}
+        <section className="flex-1">
+          {/* Top bar */}
+          <header className="border-b border-white/10 bg-white/5 backdrop-blur">
+            <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-5">
               <div>
-                <h3 className="text-lg font-semibold">Start learning</h3>
-                <p className="text-sm text-zinc-400">
-                  Pick a mode. Keep it simple. Stay consistent.
+                <p className="text-sm uppercase tracking-[0.2em] text-blue-300/80">
+                  Dashboard
+                </p>
+                <h1 className="mt-1 text-3xl font-bold tracking-tight">
+                  Welcome back, Gabriel
+                </h1>
+                <p className="mt-2 text-white/65">
+                  Stay consistent, sharpen your Linux skills, and build real command-line confidence.
                 </p>
               </div>
-              <Link
-                href="/settings"
-                className="text-sm text-zinc-300 hover:text-white"
-              >
-                Settings →
-              </Link>
-            </div>
 
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-              {features.map((f) => (
-                <Link
-                  key={f.title}
-                  href={f.href}
-                  className="group rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/5 transition hover:bg-white/10"
+              <div className="flex items-center gap-3">
+                <a
+                  href="https://github.com/gcastanon28/tech-command-trainer"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-xl border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-white/90 hover:bg-white/10"
                 >
-                  <div className="flex items-start justify-between gap-3">
-                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 ring-1 ring-white/10">
-                      {f.icon}
-                    </div>
-                    <span className="text-xs text-zinc-400 group-hover:text-zinc-200">
-                      Open →
-                    </span>
-                  </div>
+                  GitHub
+                </a>
+                <a
+                  href="https://studio---studio-1830710449-3d060.us-central1.hosted.app"
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rounded-xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-400"
+                >
+                  Live App
+                </a>
+              </div>
+            </div>
+          </header>
 
-                  <h4 className="mt-4 text-base font-semibold">
-                    {f.title}
-                  </h4>
-                  <p className="mt-1 text-sm text-zinc-400">
-                    {f.description}
+          <div className="mx-auto max-w-7xl px-6 py-8">
+            {/* Hero */}
+            <section className="overflow-hidden rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/20 via-cyan-400/10 to-transparent p-8 shadow-2xl">
+              <div className="grid gap-8 lg:grid-cols-[1.3fr_0.7fr]">
+                <div>
+                  <p className="inline-flex rounded-full border border-blue-400/30 bg-blue-400/10 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-blue-200">
+                    Level 24 • 240 XP
+                  </p>
+                  <h2 className="mt-5 max-w-2xl text-4xl font-bold leading-tight">
+                    Master Linux and Python faster with focused daily practice.
+                  </h2>
+                  <p className="mt-4 max-w-2xl text-base text-white/70">
+                    Review commands, test your knowledge, and build consistency through guided challenges, flashcards, and skill checks.
                   </p>
 
-                  <div className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-zinc-950 group-hover:bg-zinc-200">
-                    {f.cta}
-                    <span aria-hidden>→</span>
+                  <div className="mt-6 flex flex-wrap gap-3">
+                    <button className="rounded-xl bg-white px-5 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200">
+                      Start Today&apos;s Challenge
+                    </button>
+                    <button className="rounded-xl border border-white/15 bg-white/5 px-5 py-3 text-sm font-semibold text-white hover:bg-white/10">
+                      Take a Quick Quiz
+                    </button>
                   </div>
-                </Link>
+                </div>
+
+                <div className="rounded-2xl border border-white/10 bg-black/20 p-5">
+                  <p className="text-sm font-semibold text-white/80">Today&apos;s Goal</p>
+                  <div className="mt-4 space-y-4">
+                    <GoalRow title="Review 10 commands" status="In progress" />
+                    <GoalRow title="Complete 1 quiz" status="Ready" />
+                    <GoalRow title="Keep streak alive" status="12 days" />
+                  </div>
+                </div>
+              </div>
+            </section>
+
+            {/* Stats */}
+            <section className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+              {stats.map((stat) => (
+                <div
+                  key={stat.label}
+                  className="rounded-2xl border border-white/10 bg-white/5 p-5 shadow-lg"
+                >
+                  <p className="text-sm text-white/60">{stat.label}</p>
+                  <p className="mt-3 text-3xl font-bold">{stat.value}</p>
+                  <p className="mt-2 text-sm text-white/50">{stat.subtext}</p>
+                </div>
               ))}
-            </div>
+            </section>
+
+            {/* Main grid */}
+            <section className="mt-8 grid gap-6 xl:grid-cols-[1.4fr_0.9fr]">
+              {/* Left side */}
+              <div className="space-y-6">
+                <div className="rounded-3xl border border-white/10 bg-[#0f172a] p-6 shadow-xl">
+                  <div className="mb-6 flex items-center justify-between">
+                    <div>
+                      <h3 className="text-2xl font-bold">Learning Modules</h3>
+                      <p className="mt-1 text-sm text-white/60">
+                        Pick the mode that fits your study session.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="grid gap-4 md:grid-cols-2">
+                    {modules.map((module) => (
+                      <Link
+                        key={module.title}
+                        href={module.href}
+                        className="rounded-2xl border border-white/10 bg-white/5 p-5 transition hover:border-blue-400/40 hover:bg-white/10"
+                      >
+                        <h4 className="text-lg font-semibold">{module.title}</h4>
+                        <p className="mt-2 text-sm leading-6 text-white/65">
+                          {module.description}
+                        </p>
+                        <div className="mt-5 inline-flex rounded-xl bg-blue-500 px-4 py-2 text-sm font-semibold text-white hover:bg-blue-400">
+                          {module.button}
+                        </div>
+                      </Link>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-[#0f172a] p-6 shadow-xl">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <h3 className="text-2xl font-bold">Recent Activity</h3>
+                      <p className="mt-1 text-sm text-white/60">
+                        Your latest learning progress.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="mt-6 space-y-4">
+                    <ActivityRow
+                      title="Completed Linux Shell Quiz"
+                      time="2 hours ago"
+                      score="Score: 90%"
+                    />
+                    <ActivityRow
+                      title="Reviewed 12 flashcards"
+                      time="Earlier today"
+                      score="Mastery increased"
+                    />
+                    <ActivityRow
+                      title="Finished Daily Challenge"
+                      time="Yesterday"
+                      score="Streak maintained"
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* Right side */}
+              <div className="space-y-6">
+                <div className="rounded-3xl border border-white/10 bg-[#0f172a] p-6 shadow-xl">
+                  <h3 className="text-2xl font-bold">Skill Progress</h3>
+                  <p className="mt-1 text-sm text-white/60">
+                    Current proficiency by category.
+                  </p>
+
+                  <div className="mt-6 space-y-5">
+                    {progress.map((item) => (
+                      <div key={item.name}>
+                        <div className="mb-2 flex items-center justify-between text-sm">
+                          <span className="text-white/85">{item.name}</span>
+                          <span className="text-white/60">{item.value}%</span>
+                        </div>
+                        <div className="h-3 w-full rounded-full bg-white/10">
+                          <div
+                            className="h-3 rounded-full bg-gradient-to-r from-blue-500 to-cyan-400"
+                            style={{ width: `${item.value}%` }}
+                          />
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="rounded-3xl border border-white/10 bg-gradient-to-br from-blue-500/15 to-cyan-400/10 p-6 shadow-xl">
+                  <h3 className="text-2xl font-bold">Keep Momentum</h3>
+                  <p className="mt-2 text-sm leading-6 text-white/70">
+                    Small daily sessions beat random long sessions. Stay consistent and build real command memory over time.
+                  </p>
+                  <button className="mt-5 w-full rounded-xl bg-white px-4 py-3 text-sm font-semibold text-slate-900 hover:bg-slate-200">
+                    Resume Learning
+                  </button>
+                </div>
+              </div>
+            </section>
           </div>
-
-          {/* Right rail */}
-          <aside className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/5">
-            <h3 className="text-lg font-semibold">Today</h3>
-            <p className="mt-1 text-sm text-zinc-400">
-              Quick plan to keep momentum.
-            </p>
-
-            <div className="mt-4 space-y-3">
-              <TaskRow
-                title="Warm-up"
-                desc="Review 5 commands"
-                badge="5 min"
-              />
-              <TaskRow
-                title="Skill Check"
-                desc="Take 1 quiz"
-                badge="10 min"
-              />
-              <TaskRow
-                title="Challenge"
-                desc="Complete today’s task"
-                badge="15 min"
-              />
-            </div>
-
-            <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">
-              <p className="text-xs uppercase tracking-wide text-zinc-400">
-                Tip
-              </p>
-              <p className="mt-2 text-sm text-zinc-200">
-                Consistency beats intensity. Do the <span className="font-semibold">daily challenge</span> even on busy days.
-              </p>
-            </div>
-
-            <div className="mt-5 flex gap-2">
-              <Link
-                href="/daily-challenge"
-                className="flex-1 rounded-xl bg-white px-4 py-2.5 text-center text-sm font-semibold text-zinc-950 hover:bg-zinc-200"
-              >
-                Start now
-              </Link>
-              <Link
-                href="/repository"
-                className="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-white/10"
-              >
-                Browse
-              </Link>
-            </div>
-          </aside>
         </section>
-
-        {/* Footer */}
-        <footer className="mt-10 border-t border-white/10 pt-6 text-sm text-zinc-500">
-          Built with Next.js + Tailwind + Firebase • <span className="text-zinc-400">Tech Command Trainer</span>
-        </footer>
       </div>
     </main>
   );
 }
 
-function TaskRow(props: { title: string; desc: string; badge: string }) {
+function SidebarItem({
+  label,
+  active = false,
+}: {
+  label: string;
+  active?: boolean;
+}) {
   return (
-    <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3">
-      <div>
-        <p className="text-sm font-semibold text-zinc-100">{props.title}</p>
-        <p className="text-xs text-zinc-400">{props.desc}</p>
-      </div>
-      <span className="rounded-lg border border-white/10 bg-black/30 px-2 py-1 text-xs text-zinc-300">
-        {props.badge}
+    <button
+      className={`flex w-full items-center rounded-2xl px-4 py-3 text-left text-sm font-medium transition ${
+        active
+          ? "bg-blue-500/15 text-white"
+          : "text-white/70 hover:bg-white/5 hover:text-white"
+      }`}
+    >
+      {label}
+    </button>
+  );
+}
+
+function GoalRow({
+  title,
+  status,
+}: {
+  title: string;
+  status: string;
+}) {
+  return (
+    <div className="flex items-center justify-between rounded-xl border border-white/10 bg-white/5 px-4 py-3">
+      <span className="text-sm text-white/85">{title}</span>
+      <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs font-semibold text-blue-200">
+        {status}
       </span>
     </div>
   );
 }
 
-/* ---------- Icons (no extra dependencies) ---------- */
-
-function IconTerminal() {
+function ActivityRow({
+  title,
+  time,
+  score,
+}: {
+  title: string;
+  time: string;
+  score: string;
+}) {
   return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M4 17l6-5-6-5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-        strokeLinejoin="round"
-      />
-      <path
-        d="M12 19h8"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function IconBook() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M4 5a3 3 0 013-3h12v18H7a3 3 0 01-3-3V5z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M7 2v18"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function IconCards() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M7 7h13v13H7V7z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M4 4h13v13"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-    </svg>
-  );
-}
-
-function IconQuiz() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M4 4h16v16H4V4z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M8 8h8M8 12h8M8 16h5"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
-  );
-}
-
-function IconBolt() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M13 2L3 14h8l-1 8 11-14h-8l0-6z"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinejoin="round"
-      />
-    </svg>
-  );
-}
-
-function IconTarget() {
-  return (
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
-      <path
-        d="M12 22a10 10 0 110-20 10 10 0 010 20z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M12 16a4 4 0 110-8 4 4 0 010 8z"
-        stroke="currentColor"
-        strokeWidth="2"
-      />
-      <path
-        d="M12 12l7-7"
-        stroke="currentColor"
-        strokeWidth="2"
-        strokeLinecap="round"
-      />
-    </svg>
+    <div className="flex items-start justify-between rounded-2xl border border-white/10 bg-white/5 p-4">
+      <div>
+        <p className="font-medium text-white">{title}</p>
+        <p className="mt-1 text-sm text-white/55">{time}</p>
+      </div>
+      <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
+        {score}
+      </span>
+    </div>
   );
 }
