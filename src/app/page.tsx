@@ -62,13 +62,13 @@ export default function Home() {
 
           <nav className="flex-1 px-4 py-6">
             <div className="space-y-2">
-              <SidebarItem label="Dashboard" active />
-              <SidebarItem label="Command Library" />
-              <SidebarItem label="Quick Review" />
-              <SidebarItem label="Skill Check" />
-              <SidebarItem label="Today's Challenge" />
-              <SidebarItem label="Progress" />
-              <SidebarItem label="Settings" />
+              <SidebarItem label="Dashboard" href="/" active />
+              <SidebarItem label="Command Library" href="/command-library" />
+              <SidebarItem label="Quick Review" href="/quick-review" />
+              <SidebarItem label="Skill Check" href="/skill-check" />
+              <SidebarItem label="Today's Challenge" href="/todays-challenge" />
+              <SidebarItem label="Progress" href="/progress" />
+              <SidebarItem label="Settings" href="/settings" />
             </div>
           </nav>
 
