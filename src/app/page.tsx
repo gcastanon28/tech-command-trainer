@@ -282,13 +282,16 @@ export default function Home() {
 
 function SidebarItem({
   label,
+  href,
   active = false,
 }: {
   label: string;
+  href: string;
   active?: boolean;
 }) {
   return (
-    <button
+    <Link
+      href={href}
       className={`flex w-full items-center rounded-2xl px-4 py-3 text-left text-sm font-medium transition ${
         active
           ? "bg-blue-500/15 text-white"
@@ -296,7 +299,7 @@ function SidebarItem({
       }`}
     >
       {label}
-    </button>
+    </Link>
   );
 }
 
