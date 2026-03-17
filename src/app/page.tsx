@@ -18,7 +18,7 @@ import {
   Line, 
   Cell 
 } from "recharts";
-import { Trophy, Zap, Clock, Star, Flame } from "lucide-react";
+import { Trophy, Zap, Clock, Star, Flame, ExternalLink } from "lucide-react";
 import Link from "next/link";
 
 const activityData = [
@@ -46,6 +46,11 @@ export default function DashboardPage() {
               <Flame className="text-orange-500 h-5 w-5" />
               <span className="font-bold">12 Day Streak</span>
             </div>
+            <Button variant="outline" size="lg" asChild>
+              <a href="https://example.com/demo" target="_blank" rel="noopener noreferrer">
+                <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
+              </a>
+            </Button>
             <Link href="/challenge">
               <Button size="lg" className="bg-primary hover:bg-primary/90">
                 <Zap className="mr-2 h-4 w-4" /> Daily Challenge
