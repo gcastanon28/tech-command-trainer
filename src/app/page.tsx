@@ -1,189 +1,415 @@
-
-"use client";
-
-import { AppSidebar } from "@/components/layout/sidebar";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { 
-  BarChart, 
-  Bar, 
-  XAxis, 
-  YAxis, 
-  CartesianGrid, 
-  Tooltip, 
-  ResponsiveContainer, 
-  LineChart, 
-  Line, 
-  Cell 
-} from "recharts";
-import { Trophy, Zap, Clock, Star, Flame, ExternalLink } from "lucide-react";
+// src/app/page.tsx
 import Link from "next/link";
 
-const activityData = [
-  { day: "Mon", score: 40 },
-  { day: "Tue", score: 30 },
-  { day: "Wed", score: 65 },
-  { day: "Thu", score: 45 },
-  { day: "Fri", score: 90 },
-  { day: "Sat", score: 70 },
-  { day: "Sun", score: 20 },
-];
+type Stat = {
+  label: string;
+  value: string;
+  sub?: string;
+};
+
+type FeatureCard = {
+  title: string;
+  description: string;
+  href: string;
+  cta: string;
+  icon: React.ReactNode;
+};
 
 export default function DashboardPage() {
+  const userName = "Gabriel"; // later: replace with auth user name
+  const todayGoal = "Complete 1 quiz + review 10 commands";
+
+  const stats: Stat[] = [
+    { label: "Commands Learned", value: "24", sub: "+3 this week" },
+    { label: "Quiz Accuracy", value: "87%", sub: "Last 7 days" },
+    { label: "Current Streak", value: "6 days", sub: "Keep it going" },
+    { label: "Daily XP", value: "240", sub: "Level 24 → 25" },
+  ];
+
+  const features: FeatureCard[] = [
+    {
+      title: "Command Library",
+      description: "Search Linux & Python commands with examples and notes.",
+      href: "/repository",
+      cta: "Browse commands",
+      icon: <IconBook />,
+    },
+    {
+      title: "Quick Review",
+      description: "Flashcards to lock in syntax and purpose fast.",
+      href: "/flashcards",
+      cta: "Start review",
+      icon: <IconCards />,
+    },
+    {
+      title: "Skill Check",
+      description: "Short quizzes to test what you actually remember.",
+      href: "/quizzes",
+      cta: "Take a quiz",
+      icon: <IconQuiz />,
+    },
+    {
+      title: "Today’s Challenge",
+      description: "One practical task a day to build real consistency.",
+      href: "/daily-challenge",
+      cta: "Begin challenge",
+      icon: <IconBolt />,
+    },
+  ];
+
   return (
-    <div className="flex h-screen bg-background text-foreground">
-      <AppSidebar />
-      <main className="flex-1 ml-64 overflow-y-auto p-8 lg:p-12">
-        <header className="mb-10 flex justify-between items-end">
-          <div>
-            <h1 className="text-4xl font-headline font-bold mb-2">Welcome back, Developer</h1>
-            <p className="text-muted-foreground">Continue your journey to Linux and Python mastery.</p>
-          </div>
-          <div className="flex items-center gap-4">
-            <div className="flex items-center gap-2 bg-secondary px-4 py-2 rounded-full border border-border">
-              <Flame className="text-orange-500 h-5 w-5" />
-              <span className="font-bold">12 Day Streak</span>
+    <main className="min-h-screen bg-zinc-950 text-zinc-100">
+      {/* Top bar */}
+      <header className="sticky top-0 z-10 border-b border-white/10 bg-zinc-950/70 backdrop-blur">
+        <div className="mx-auto flex max-w-6xl items-center justify-between px-4 py-4">
+          <div className="flex items-center gap-3">
+            <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 ring-1 ring-white/10">
+              <IconTerminal />
             </div>
-            <Button variant="outline" size="lg" asChild>
-              <a href="https://example.com/demo" target="_blank" rel="noopener noreferrer">
-                <ExternalLink className="mr-2 h-4 w-4" /> Live Demo
-              </a>
-            </Button>
-            <Link href="/challenge">
-              <Button size="lg" className="bg-primary hover:bg-primary/90">
-                <Zap className="mr-2 h-4 w-4" /> Daily Challenge
-              </Button>
-            </Link>
+            <div>
+              <p className="text-sm text-zinc-400">Tech Command Trainer</p>
+              <h1 className="text-lg font-semibold leading-tight">
+                Dashboard
+              </h1>
+            </div>
           </div>
-        </header>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-10">
-          <StatCard icon={Trophy} title="Mastery Level" value="Level 24" subValue="Next: Level 25 (240 XP)" color="text-primary" />
-          <StatCard icon={Star} title="Flashcards Mastered" value="142" subValue="82% of total collection" color="text-accent" />
-          <StatCard icon={Clock} title="Learning Time" value="48h 20m" subValue="+2.5h this week" color="text-blue-400" />
-          <StatCard icon={Zap} title="Quizzes Passed" value="38" subValue="Avg. score: 94%" color="text-yellow-400" />
+          <div className="flex items-center gap-2">
+            <a
+              className="hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 hover:bg-white/10 md:inline-flex"
+              href="#"
+              target="_blank"
+              rel="noreferrer"
+              title="Add your deployed URL here"
+            >
+              Live Demo
+            </a>
+            <a
+              className="hidden rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-sm text-zinc-200 hover:bg-white/10 md:inline-flex"
+              href="https://github.com/gcastanon28/tech-command-trainer"
+              target="_blank"
+              rel="noreferrer"
+            >
+              GitHub
+            </a>
+
+            <button className="inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-medium text-zinc-950 hover:bg-zinc-200">
+              <span className="grid h-6 w-6 place-items-center rounded-full bg-zinc-900 text-white">
+                {userName.slice(0, 1)}
+              </span>
+              <span className="hidden sm:inline">Profile</span>
+            </button>
+          </div>
         </div>
+      </header>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-10">
-          <Card className="lg:col-span-2">
-            <CardHeader>
-              <CardTitle className="font-headline">Activity Overview</CardTitle>
-              <CardDescription>Daily learning points earned over the past week.</CardDescription>
-            </CardHeader>
-            <CardContent className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <BarChart data={activityData}>
-                  <CartesianGrid strokeDasharray="3 3" stroke="#2a323a" vertical={false} />
-                  <XAxis dataKey="day" axisLine={false} tickLine={false} tick={{fill: '#94a3b8'}} />
-                  <YAxis hide />
-                  <Tooltip 
-                    contentStyle={{ backgroundColor: '#191F25', border: '1px solid #2d3748', borderRadius: '8px' }}
-                    itemStyle={{ color: '#4796F0' }}
-                  />
-                  <Bar dataKey="score" radius={[4, 4, 0, 0]}>
-                    {activityData.map((entry, index) => (
-                      <Cell key={`cell-${index}`} fill={entry.score > 60 ? '#68E1FF' : '#4796F0'} />
-                    ))}
-                  </Bar>
-                </BarChart>
-              </ResponsiveContainer>
-            </CardContent>
-          </Card>
+      {/* Content */}
+      <div className="mx-auto max-w-6xl px-4 py-8">
+        {/* Hero */}
+        <section className="rounded-2xl border border-white/10 bg-gradient-to-b from-white/10 to-white/5 p-6 ring-1 ring-white/5">
+          <p className="text-sm text-zinc-300">Welcome back,</p>
+          <div className="mt-1 flex flex-col gap-3 md:flex-row md:items-end md:justify-between">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight md:text-3xl">
+                {userName} 👋
+              </h2>
+              <p className="mt-2 max-w-2xl text-sm text-zinc-300">
+                Practice Linux + Python commands daily, test your memory, and build consistency like a real engineer.
+              </p>
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-headline">Skill Progress</CardTitle>
-              <CardDescription>Knowledge by category</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-6">
-              <SkillProgress label="Linux Shell" value={78} />
-              <SkillProgress label="Python Basics" value={92} />
-              <SkillProgress label="Python Advanced" value={45} />
-              <SkillProgress label="Scripting" value={61} />
-              <SkillProgress label="Networking" value={30} />
-            </CardContent>
-          </Card>
-        </div>
+            <div className="flex flex-col gap-2 sm:flex-row">
+              <Link
+                href="/daily-challenge"
+                className="inline-flex items-center justify-center rounded-xl bg-white px-4 py-2.5 text-sm font-semibold text-zinc-950 hover:bg-zinc-200"
+              >
+                Start today’s challenge
+              </Link>
+              <Link
+                href="/quizzes"
+                className="inline-flex items-center justify-center rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-sm font-semibold text-white hover:bg-white/10"
+              >
+                Take a quick quiz
+              </Link>
+            </div>
+          </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          <Card>
-            <CardHeader className="flex flex-row items-center justify-between">
+          {/* Goal */}
+          <div className="mt-5 flex flex-col gap-2 rounded-xl border border-white/10 bg-black/20 p-4 sm:flex-row sm:items-center sm:justify-between">
+            <div className="flex items-center gap-3">
+              <div className="grid h-9 w-9 place-items-center rounded-lg bg-white/10 ring-1 ring-white/10">
+                <IconTarget />
+              </div>
               <div>
-                <CardTitle className="font-headline">Recently Viewed Commands</CardTitle>
-                <CardDescription>Jump back into your repository</CardDescription>
+                <p className="text-xs uppercase tracking-wide text-zinc-400">
+                  Today’s goal
+                </p>
+                <p className="text-sm font-medium text-zinc-100">
+                  {todayGoal}
+                </p>
               </div>
-              <Button variant="ghost" className="text-primary hover:text-primary hover:bg-primary/10">View All</Button>
-            </CardHeader>
-            <CardContent>
-              <ul className="space-y-4">
-                {['grep', 'chmod', 'list-comp', 'pip install'].map((cmd) => (
-                  <li key={cmd} className="flex items-center justify-between p-3 rounded-lg bg-secondary/50 border border-border hover:border-primary/50 transition-colors cursor-pointer group">
-                    <code className="text-accent font-code font-bold">{cmd}</code>
-                    <Badge variant="outline" className="opacity-70 group-hover:opacity-100 transition-opacity">
-                      {cmd.includes('-') || cmd.includes(' ') ? 'Python' : 'Linux'}
-                    </Badge>
-                  </li>
-                ))}
-              </ul>
-            </CardContent>
-          </Card>
+            </div>
 
-          <Card>
-            <CardHeader>
-              <CardTitle className="font-headline">Upcoming Milestone</CardTitle>
-              <CardDescription>Complete these to level up!</CardDescription>
-            </CardHeader>
-            <CardContent className="space-y-4">
-              <div className="p-4 rounded-lg bg-primary/5 border border-primary/20">
-                <h4 className="font-bold flex items-center gap-2 mb-1">
-                  <Trophy className="h-4 w-4 text-primary" /> Python Master Quiz
-                </h4>
-                <p className="text-sm text-muted-foreground mb-3">Score 90% or higher on advanced Python concepts.</p>
-                <Button variant="outline" size="sm" className="w-full">Start Quiz</Button>
-              </div>
-              <div className="p-4 rounded-lg bg-secondary/50 border border-border">
-                <h4 className="font-bold flex items-center gap-2 mb-1">
-                  <Star className="h-4 w-4 text-accent" /> Daily Streak
-                </h4>
-                <p className="text-sm text-muted-foreground">Maintain a 14-day streak to earn a new badge.</p>
-              </div>
-            </CardContent>
-          </Card>
-        </div>
-      </main>
-    </div>
-  );
-}
-
-function StatCard({ icon: Icon, title, value, subValue, color }: any) {
-  return (
-    <Card className="hover:border-primary/50 transition-colors">
-      <CardContent className="pt-6">
-        <div className="flex items-center gap-4 mb-3">
-          <div className={`${color} bg-secondary p-2 rounded-lg`}>
-            <Icon className="h-5 w-5" />
+            <div className="flex items-center gap-2">
+              <button className="rounded-lg border border-white/10 bg-white/5 px-3 py-2 text-xs text-zinc-200 hover:bg-white/10">
+                Edit goal
+              </button>
+              <button className="rounded-lg bg-emerald-400 px-3 py-2 text-xs font-semibold text-zinc-950 hover:bg-emerald-300">
+                Mark done
+              </button>
+            </div>
           </div>
-          <p className="text-sm font-medium text-muted-foreground">{title}</p>
-        </div>
-        <div className="flex flex-col">
-          <span className="text-2xl font-headline font-bold">{value}</span>
-          <span className="text-xs text-muted-foreground mt-1">{subValue}</span>
-        </div>
-      </CardContent>
-    </Card>
+        </section>
+
+        {/* Stats */}
+        <section className="mt-6 grid grid-cols-1 gap-3 sm:grid-cols-2 lg:grid-cols-4">
+          {stats.map((s) => (
+            <div
+              key={s.label}
+              className="rounded-2xl border border-white/10 bg-white/5 p-4 ring-1 ring-white/5"
+            >
+              <p className="text-xs uppercase tracking-wide text-zinc-400">
+                {s.label}
+              </p>
+              <p className="mt-2 text-2xl font-semibold">{s.value}</p>
+              {s.sub ? (
+                <p className="mt-1 text-xs text-zinc-400">{s.sub}</p>
+              ) : null}
+            </div>
+          ))}
+        </section>
+
+        {/* Main grid */}
+        <section className="mt-6 grid grid-cols-1 gap-4 lg:grid-cols-3">
+          {/* Features */}
+          <div className="lg:col-span-2">
+            <div className="mb-3 flex items-end justify-between">
+              <div>
+                <h3 className="text-lg font-semibold">Start learning</h3>
+                <p className="text-sm text-zinc-400">
+                  Pick a mode. Keep it simple. Stay consistent.
+                </p>
+              </div>
+              <Link
+                href="/settings"
+                className="text-sm text-zinc-300 hover:text-white"
+              >
+                Settings →
+              </Link>
+            </div>
+
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
+              {features.map((f) => (
+                <Link
+                  key={f.title}
+                  href={f.href}
+                  className="group rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/5 transition hover:bg-white/10"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="grid h-10 w-10 place-items-center rounded-xl bg-white/10 ring-1 ring-white/10">
+                      {f.icon}
+                    </div>
+                    <span className="text-xs text-zinc-400 group-hover:text-zinc-200">
+                      Open →
+                    </span>
+                  </div>
+
+                  <h4 className="mt-4 text-base font-semibold">
+                    {f.title}
+                  </h4>
+                  <p className="mt-1 text-sm text-zinc-400">
+                    {f.description}
+                  </p>
+
+                  <div className="mt-4 inline-flex items-center gap-2 rounded-lg bg-white px-3 py-2 text-sm font-semibold text-zinc-950 group-hover:bg-zinc-200">
+                    {f.cta}
+                    <span aria-hidden>→</span>
+                  </div>
+                </Link>
+              ))}
+            </div>
+          </div>
+
+          {/* Right rail */}
+          <aside className="rounded-2xl border border-white/10 bg-white/5 p-5 ring-1 ring-white/5">
+            <h3 className="text-lg font-semibold">Today</h3>
+            <p className="mt-1 text-sm text-zinc-400">
+              Quick plan to keep momentum.
+            </p>
+
+            <div className="mt-4 space-y-3">
+              <TaskRow
+                title="Warm-up"
+                desc="Review 5 commands"
+                badge="5 min"
+              />
+              <TaskRow
+                title="Skill Check"
+                desc="Take 1 quiz"
+                badge="10 min"
+              />
+              <TaskRow
+                title="Challenge"
+                desc="Complete today’s task"
+                badge="15 min"
+              />
+            </div>
+
+            <div className="mt-5 rounded-xl border border-white/10 bg-black/20 p-4">
+              <p className="text-xs uppercase tracking-wide text-zinc-400">
+                Tip
+              </p>
+              <p className="mt-2 text-sm text-zinc-200">
+                Consistency beats intensity. Do the <span className="font-semibold">daily challenge</span> even on busy days.
+              </p>
+            </div>
+
+            <div className="mt-5 flex gap-2">
+              <Link
+                href="/daily-challenge"
+                className="flex-1 rounded-xl bg-white px-4 py-2.5 text-center text-sm font-semibold text-zinc-950 hover:bg-zinc-200"
+              >
+                Start now
+              </Link>
+              <Link
+                href="/repository"
+                className="flex-1 rounded-xl border border-white/15 bg-white/5 px-4 py-2.5 text-center text-sm font-semibold text-white hover:bg-white/10"
+              >
+                Browse
+              </Link>
+            </div>
+          </aside>
+        </section>
+
+        {/* Footer */}
+        <footer className="mt-10 border-t border-white/10 pt-6 text-sm text-zinc-500">
+          Built with Next.js + Tailwind + Firebase • <span className="text-zinc-400">Tech Command Trainer</span>
+        </footer>
+      </div>
+    </main>
   );
 }
 
-function SkillProgress({ label, value }: { label: string, value: number }) {
+function TaskRow(props: { title: string; desc: string; badge: string }) {
   return (
-    <div className="space-y-2">
-      <div className="flex justify-between text-sm">
-        <span className="font-medium">{label}</span>
-        <span className="text-muted-foreground">{value}%</span>
+    <div className="flex items-center justify-between gap-3 rounded-xl border border-white/10 bg-white/5 p-3">
+      <div>
+        <p className="text-sm font-semibold text-zinc-100">{props.title}</p>
+        <p className="text-xs text-zinc-400">{props.desc}</p>
       </div>
-      <Progress value={value} className="h-2" />
+      <span className="rounded-lg border border-white/10 bg-black/30 px-2 py-1 text-xs text-zinc-300">
+        {props.badge}
+      </span>
     </div>
+  );
+}
+
+/* ---------- Icons (no extra dependencies) ---------- */
+
+function IconTerminal() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M4 17l6-5-6-5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M12 19h8"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function IconBook() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M4 5a3 3 0 013-3h12v18H7a3 3 0 01-3-3V5z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M7 2v18"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function IconCards() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M7 7h13v13H7V7z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M4 4h13v13"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+    </svg>
+  );
+}
+
+function IconQuiz() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M4 4h16v16H4V4z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M8 8h8M8 12h8M8 16h5"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
+  );
+}
+
+function IconBolt() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M13 2L3 14h8l-1 8 11-14h-8l0-6z"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+function IconTarget() {
+  return (
+    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" className="text-white">
+      <path
+        d="M12 22a10 10 0 110-20 10 10 0 010 20z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 16a4 4 0 110-8 4 4 0 010 8z"
+        stroke="currentColor"
+        strokeWidth="2"
+      />
+      <path
+        d="M12 12l7-7"
+        stroke="currentColor"
+        strokeWidth="2"
+        strokeLinecap="round"
+      />
+    </svg>
   );
 }
