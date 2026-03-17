@@ -95,7 +95,7 @@ export default function Home() {
                   Dashboard
                 </p>
                 <h1 className="mt-1 text-3xl font-bold tracking-tight">
-                  Welcome back, Gabriel
+                  FULL REPLACE TEST
                 </h1>
                 <p className="mt-2 text-white/65">
                   Stay consistent, sharpen your Linux skills, and build real command-line confidence.
