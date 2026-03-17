@@ -1,4 +1,3 @@
-# Firebase Studio
 # 🚀 Tech Command Trainer
 
 An interactive web app designed to help users master **Linux and Python commands** through quizzes, flashcards, and daily challenges.
