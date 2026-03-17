@@ -1,0 +1,17 @@
+
+{
+  "placeholderImages": [
+    {
+      "id": "hero-bg",
+      "description": "Abstract technology and code background",
+      "imageUrl": "https://picsum.photos/seed/codepath1/1200/600",
+      "imageHint": "coding background"
+    },
+    {
+      "id": "user-avatar",
+      "description": "Default user avatar",
+      "imageUrl": "https://picsum.photos/seed/user123/100/100",
+      "imageHint": "user avatar"
+    }
+  ]
+}
