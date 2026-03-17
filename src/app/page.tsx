@@ -313,7 +313,7 @@ function GoalRow({
       <span className="rounded-full bg-blue-500/15 px-3 py-1 text-xs font-semibold text-blue-200">
         {status}
       </span>
-<<<<<<< HEAD
+
     </div>
   );
 }
@@ -336,30 +336,7 @@ function ActivityRow({
       <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
         {score}
       </span>
-=======
->>>>>>> 6067f2c (Sync local workspace and replace dashboard)
-    </div>
-  );
-}
-
-function ActivityRow({
-  title,
-  time,
-  score,
-}: {
-  title: string;
-  time: string;
-  score: string;
-}) {
-  return (
-    <div className="flex items-start justify-between rounded-2xl border border-white/10 bg-white/5 p-4">
-      <div>
-        <p className="font-medium text-white">{title}</p>
-        <p className="mt-1 text-sm text-white/55">{time}</p>
-      </div>
-      <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-xs text-white/70">
-        {score}
-      </span>
+ 6067f2c (Sync local workspace and replace dashboard)
     </div>
   );
 }
